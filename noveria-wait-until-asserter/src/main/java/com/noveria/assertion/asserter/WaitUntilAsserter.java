@@ -1,6 +1,6 @@
-package com.noveria.asserter;
+package com.noveria.assertion.asserter;
 
-import com.noveria.task.AssertTask;
+import com.noveria.assertion.task.AssertTask;
 
 import static org.junit.Assert.fail;
 

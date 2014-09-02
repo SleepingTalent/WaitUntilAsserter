@@ -1,4 +1,4 @@
-package com.noveria.task;
+package com.noveria.assertion.task;
 
 public interface AssertTask {
 
