@@ -1,4 +1,7 @@
-package com.noveria.asserter.common;
+package com.noveria.factory;
+
+import com.noveria.task.AssertTask;
+import com.noveria.asserter.WaitUntilAsserter;
 
 public class AssertionFactory {
 

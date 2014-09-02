@@ -1,4 +1,4 @@
-package com.noveria.asserter.common;
+package com.noveria.task;
 
 public interface AssertTask {
 
