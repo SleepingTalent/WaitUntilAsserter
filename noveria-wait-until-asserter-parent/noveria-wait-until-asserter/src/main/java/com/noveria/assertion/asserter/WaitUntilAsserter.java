@@ -49,8 +49,6 @@ public final class WaitUntilAsserter {
             log.debug("Assertion Result = {}",success);
         }
 
-        log.debug("MaxWaitTime {} Expired!",maxWaitTime);
-
         if(!success) {
           throw new WaitUntilAssertionError(
                   assertTask.getTaskName() + " assertionFailed : " + assertTask.getFailureMessage());

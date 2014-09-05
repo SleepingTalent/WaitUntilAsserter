@@ -1,11 +1,14 @@
 package com.noveria.cukes.runtime;
 
+import com.noveria.assertion.asserter.WaitUntilAsserter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
 @Scope("cucumber-glue")
 public class RuntimeState {
+
+    private WaitUntilAsserter waitUntilAsserter;
 
     public void setInitialState() {
         System.err.println("Setting an initial state");
@@ -17,5 +20,13 @@ public class RuntimeState {
 
     public void expectResult() {
         System.err.println("Expected Result");
+    }
+
+    public void setWaitUntilAsserter(WaitUntilAsserter waitUntilAsserter) {
+        this.waitUntilAsserter = waitUntilAsserter;
+    }
+
+    public WaitUntilAsserter getWaitUntilAsserter() {
+        return waitUntilAsserter;
     }
 }

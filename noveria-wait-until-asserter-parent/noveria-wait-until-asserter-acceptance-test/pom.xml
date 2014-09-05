@@ -23,6 +23,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>noveria-wait-until-asserter</groupId>
+            <artifactId>noveria-wait-until-asserter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
@@ -167,8 +172,14 @@
                         <id>start-jetty</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>run-war</goal>
+                            <goal>deploy-war</goal>
                         </goals>
+                      <configuration>
+                          <scanIntervalSeconds>0</scanIntervalSeconds>
+                          <daemon>true</daemon>
+                          <stopKey />
+                          <stopPort />
+                      </configuration>
                     </execution>
                     <execution>
                         <id>stop-jetty</id>

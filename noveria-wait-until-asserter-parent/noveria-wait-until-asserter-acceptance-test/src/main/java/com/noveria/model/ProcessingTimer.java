@@ -12,6 +12,7 @@ public class ProcessingTimer {
     Logger log = LoggerFactory.getLogger(ProcessingTimer.class);
 
     long processingTime;
+    private boolean complete = false;
 
     public void process() {
         log.debug("Processing for = {} Milliseconds",processingTime);
@@ -21,9 +22,20 @@ public class ProcessingTimer {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        complete = true;
     }
 
     public void setProcessingTime(long processingTime) {
+        log.debug("Setting Processing Time to {} Milliseconds",processingTime);
         this.processingTime = processingTime;
+    }
+
+    public boolean processComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = false;
     }
 }
