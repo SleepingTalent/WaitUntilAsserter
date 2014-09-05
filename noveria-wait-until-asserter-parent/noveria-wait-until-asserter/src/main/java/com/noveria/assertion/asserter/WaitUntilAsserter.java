@@ -12,11 +12,11 @@ public final class WaitUntilAsserter {
 
     Logger log = LoggerFactory.getLogger(WaitUntilAsserter.class);
 
-    private static final long DEFAULT_MAX_WAIT_TIME = 30000;
+    private static final long DEFAULT_MAX_WAIT_TIME = 5000;
     private static final long SLEEP = 500;
 
-    private final AssertTask assertTask;
-    private final long maxWaitTime;
+    private AssertTask assertTask;
+    private long maxWaitTime;
 
     public WaitUntilAsserter(AssertTask assertTask) {
         this(assertTask,DEFAULT_MAX_WAIT_TIME);
