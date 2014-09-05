@@ -5,13 +5,14 @@ import com.noveria.assertion.asserter.WaitUntilAsserter;
 
 public class AssertionFactory {
 
-    public static void performAssertion(AssertTask assertTask) {
+    public void performAssertion(AssertTask assertTask) throws InterruptedException {
         WaitUntilAsserter waitUntilAsserter = new WaitUntilAsserter(assertTask);
         waitUntilAsserter.performAssertion();
     }
 
-    public static void performAssertion(AssertTask assertTask, long maxWaitTime) {
+    public void performAssertion(AssertTask assertTask, long maxWaitTime) throws InterruptedException {
         WaitUntilAsserter waitUntilAsserter = new WaitUntilAsserter(assertTask,maxWaitTime);
         waitUntilAsserter.performAssertion();
     }
+
 }
