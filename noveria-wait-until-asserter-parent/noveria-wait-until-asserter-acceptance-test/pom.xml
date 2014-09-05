@@ -5,17 +5,38 @@
         <groupId>noveria-wait-until-asserter</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>noveria-wait-until-asserter-acceptance-test</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
+
     <name>noveria-wait-until-asserter-acceptance-test</name>
     <url>http://maven.apache.org</url>
 
     <properties>
         <spring.version>3.2.4.RELEASE</spring.version>
+        <slf4j.version>1.7.7</slf4j.version>
+        <logback.version>1.0.1</logback.version>
+
+        <acceptanceTest.runner>**/AcceptanceTest.java</acceptanceTest.runner>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -68,9 +89,97 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>test-service</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>${acceptanceTest.runner}</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.16</version>
+                <configuration>
+                    <failIfNoTests>true</failIfNoTests>
+                    <argLine>-XX:MaxPermSize=512m -Xms256M -Xmx1024m
+                        -XX:+UseConcMarkSweepGC -XX:+UseParNewGC
+                        -XX:+CMSParallelRemarkEnabled -XX:+CMSClassUnloadingEnabled
+                    </argLine>
+                </configuration>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <includes>
+                                <include>${acceptanceTest.runner}</include>
+                          </includes>
+                        </configuration>
+                        <id>acceptance-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.0.4.v20111024</version>
+                <configuration>
+                    <war>${project.build.directory}/${build.finalName}</war>
+                    <webApp>
+                        <contextPath>/testing-service</contextPath>
+                    </webApp>
+                    <stopPort>4005</stopPort>
+                    <stopKey>STOP</stopKey>
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <port>4094</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                        </connector>
+                    </connectors>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                        <version>${logback.version}</version>
+                    </dependency>
+                </dependencies>
+             <executions>
+                  <execution>
+                        <id>start-jetty</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>run-war</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-jetty</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
 
