@@ -3,9 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>noveria-wait-until-asserter</groupId>
-  <artifactId>noveria-wait-until-asserte-parentr</artifactId>
+  <artifactId>noveria-wait-until-asserte-parent</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <modules>
+        <module>noveria-wait-until-asserter</module>
+    </modules>
+    <packaging>pom</packaging>
 
   <name>noveria-wait-until-asserter-parent</name>
   <url>http://maven.apache.org</url>
@@ -14,11 +17,4 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-    </dependency>
-  </dependencies>
 </project>

@@ -39,7 +39,7 @@ public class WaitUntilAsserter {
         }
 
         if(!success) {
-          fail(assertTask.getTaskName()+" assertionFailed : "+assertTask.getFailureMessage());
+          fail(assertTask.getTaskName() + " assertionFailed : " + assertTask.getFailureMessage());
         }
     }
 }
