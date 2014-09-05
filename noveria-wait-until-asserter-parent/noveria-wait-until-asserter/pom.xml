@@ -17,8 +17,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skip.mutation.tests>false</skip.mutation.tests>
         <mutation.threshold>100</mutation.threshold>
-        <instruction.coverage.threshold>0.7</instruction.coverage.threshold>
-        <class.linecoverage.threshold>0.5</class.linecoverage.threshold>
+        <instruction.coverage.threshold>0.8</instruction.coverage.threshold>
+        <class.linecoverage.threshold>0.9</class.linecoverage.threshold>
         <jacoco.version>0.6.3.201306030806</jacoco.version>
 
         <slf4j.version>1.7.7</slf4j.version>
@@ -115,7 +115,7 @@
                     </execution>
                 </executions>
             </plugin>
-       <!--     <plugin>
+       <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>0.33</version>
@@ -139,7 +139,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin> -->
+            </plugin>
         </plugins>
     </build>
 </project>
