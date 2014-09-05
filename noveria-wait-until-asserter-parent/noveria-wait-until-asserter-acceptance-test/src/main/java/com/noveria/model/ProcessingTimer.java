@@ -14,28 +14,18 @@ public class ProcessingTimer {
     long processingTime;
     private boolean complete = false;
 
-    public void process() {
-        log.debug("Processing for = {} Milliseconds",processingTime);
-
-        try {
-            TimeUnit.MILLISECONDS.sleep(processingTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        complete = true;
-    }
-
     public void setProcessingTime(long processingTime) {
         log.debug("Setting Processing Time to {} Milliseconds",processingTime);
         this.processingTime = processingTime;
     }
 
     public boolean processComplete() {
+        log.debug("Return Complete Status {}",complete);
         return complete;
     }
 
     public void setComplete(boolean complete) {
-        this.complete = false;
+        log.debug("Setting Complete Status to {}",complete);
+        this.complete = complete;
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class RuntimeState {
 
     private WaitUntilAsserter waitUntilAsserter;
+    private int processingTime;
 
     public void setInitialState() {
         System.err.println("Setting an initial state");
@@ -28,5 +29,13 @@ public class RuntimeState {
 
     public WaitUntilAsserter getWaitUntilAsserter() {
         return waitUntilAsserter;
+    }
+
+    public void setProcessingTime(int processingTime) {
+        this.processingTime = processingTime;
+    }
+
+    public int getProcessingTime() {
+        return processingTime;
     }
 }

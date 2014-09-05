@@ -14,12 +14,6 @@ public class ProcessingTimeController {
     @Autowired
     ProcessingTimer processingTimer;
 
-    @RequestMapping(value = "/process/", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public void process() {
-       processingTimer.process();
-    }
-
     @RequestMapping(value = "/processTime/{time}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void setProcessTime(@PathVariable("time")int time) {

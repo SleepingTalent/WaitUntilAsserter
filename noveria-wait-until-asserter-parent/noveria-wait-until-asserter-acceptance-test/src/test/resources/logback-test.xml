@@ -8,7 +8,9 @@
         </encoder>
     </appender>
 
-    <logger name="com.noveria.assertion.asserter.WaitUntilAsserter" level="DEBUG"/>
+    <logger name="com.noveria.assertion.asserter.WaitUntilAsserter" level="INFO"/>
+    <logger name="com.noveria.cukes.assertion.ProcessingTimeAssertTask" level="DEBUG"/>
+    <logger name="com.noveria.cukes.helpers.thread.ThreadHelper" level="DEBUG"/>
 
     <root level="ERROR">
         <appender-ref ref="STDOUT" />

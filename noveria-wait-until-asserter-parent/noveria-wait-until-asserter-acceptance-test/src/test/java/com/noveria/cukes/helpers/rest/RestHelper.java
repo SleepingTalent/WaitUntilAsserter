@@ -16,11 +16,6 @@ public class RestHelper {
 
     public static final String BASE_URL = "http://localhost:4094/testing-service/processingTimeController/";
 
-    public void callProcessOnServer() {
-        String uri = BASE_URL+"process/";
-        callGet(uri);
-    }
-
     public void setProcessingTime(int processingTime) {
         String uri = BASE_URL+"/processTime/{time}";
         postTime(uri, processingTime);
@@ -74,11 +69,5 @@ public class RestHelper {
     private HttpEntity<String> getRequest() {
         HttpHeaders headers = new HttpHeaders();
         return new HttpEntity<String>(headers);
-    }
-
-    //@Test
-    public void defaultTest() {
-        setProcessingTime(1500);
-        callProcessOnServer();
     }
 }

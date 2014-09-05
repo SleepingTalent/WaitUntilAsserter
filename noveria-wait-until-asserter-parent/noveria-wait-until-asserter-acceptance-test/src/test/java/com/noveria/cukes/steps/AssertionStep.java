@@ -5,6 +5,7 @@ import com.noveria.assertion.expection.WaitUntilAssertionError;
 import com.noveria.assertion.task.AssertTask;
 import com.noveria.cukes.assertion.ProcessingTimeAssertTask;
 import com.noveria.cukes.helpers.rest.RestHelper;
+import com.noveria.cukes.helpers.thread.ThreadHelper;
 import com.noveria.cukes.runtime.RuntimeState;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
@@ -19,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 @ContextConfiguration(locations = { "classpath:cucumber.xml" })
 @StepDefAnnotation
-public class BasicStep {
+public class AssertionStep {
 
     @Autowired
     RuntimeState runtimeState;
@@ -27,9 +28,12 @@ public class BasicStep {
     @Autowired
     RestHelper restHelper;
 
-    @Given("^a service takes \"([^\"]*)\" milliseconds to complete$")
+    @Autowired
+    ThreadHelper threadHelper;
+
+    @Given("^a service process takes \"([^\"]*)\" milliseconds to complete$")
     public void an_initial_state(int processingTime) {
-        restHelper.setProcessingTime(processingTime);
+        runtimeState.setProcessingTime(processingTime);
     }
 
     @And("^the assertion time out is set to \"([^\"]*)\" milliseconds$")
@@ -42,7 +46,7 @@ public class BasicStep {
 
     @Then("^the assertion will pass")
     public void the_assertion_will_pass() throws InterruptedException {
-        restHelper.callProcessOnServer();
+        threadHelper.startProcessCompleteUpdaterThread(runtimeState.getProcessingTime());
         runtimeState.getWaitUntilAsserter().performAssertion();
     }
 
@@ -51,7 +55,7 @@ public class BasicStep {
         boolean failsAsExpected = false;
 
         try {
-            restHelper.callProcessOnServer();
+            threadHelper.startProcessCompleteUpdaterThread(runtimeState.getProcessingTime());
             runtimeState.getWaitUntilAsserter().performAssertion();
 
         }catch (WaitUntilAssertionError waitUntilAssertionError) {
