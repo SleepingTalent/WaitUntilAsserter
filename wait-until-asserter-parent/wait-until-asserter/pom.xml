@@ -1,16 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>noveria-wait-until-asserte-parent</artifactId>
-        <groupId>noveria-wait-until-asserter</groupId>
+        <groupId>com.noveria</groupId>
+        <artifactId>wait-until-asserter-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>noveria-wait-until-asserter</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>wait-until-asserter</artifactId>
     <packaging>jar</packaging>
 
-    <name>noveria-wait-until-asserter</name>
+    <name>wait-until-asserter</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -21,7 +21,6 @@
         <instruction.coverage.threshold>0.9</instruction.coverage.threshold>
         <class.linecoverage.threshold>0.8</class.linecoverage.threshold>
         <jacoco.version>0.6.3.201306030806</jacoco.version>
-
         <slf4j.version>1.7.7</slf4j.version>
         <logback.version>1.0.1</logback.version>
     </properties>
@@ -238,7 +237,6 @@
 
     <reporting>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
