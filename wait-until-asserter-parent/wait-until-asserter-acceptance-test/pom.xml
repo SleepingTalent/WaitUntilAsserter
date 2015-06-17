@@ -28,8 +28,8 @@
         </dependency>
 
         <dependency>
-            <groupId>noveria-wait-until-asserter</groupId>
-            <artifactId>noveria-wait-until-asserter</artifactId>
+            <groupId>com.noveria</groupId>
+            <artifactId>wait-until-asserter</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

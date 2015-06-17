@@ -17,9 +17,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skip.mutation.tests>false</skip.mutation.tests>
         <skip.pmd.checks>true</skip.pmd.checks>
-        <mutation.threshold>100</mutation.threshold>
-        <instruction.coverage.threshold>0.9</instruction.coverage.threshold>
-        <class.linecoverage.threshold>0.8</class.linecoverage.threshold>
+        <mutation.threshold>70</mutation.threshold>
+        <instruction.coverage.threshold>0.8</instruction.coverage.threshold>
+        <class.linecoverage.threshold>0.7</class.linecoverage.threshold>
         <jacoco.version>0.6.3.201306030806</jacoco.version>
         <slf4j.version>1.7.7</slf4j.version>
         <logback.version>1.0.1</logback.version>
