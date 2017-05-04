@@ -9,20 +9,13 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class WaitUntilAsserter {
 
-    private static final Logger log = LoggerFactory.getLogger(WaitUntilAsserter.class);
-
-    private static final long DEFAULT_MAX_WAIT_TIME = 5000;
-    private static final long SLEEP = 500;
+    private static final Logger LOG = LoggerFactory.getLogger(WaitUntilAsserter.class);
 
     private long maxWaitTime;
     private long accumulatedTime;
 
     public WaitUntilAsserter() {
-        this(DEFAULT_MAX_WAIT_TIME);
-    }
-
-    public WaitUntilAsserter(long maxWaitTime) {
-        this.maxWaitTime = maxWaitTime;
+        setMaxWaitTime(5000);
     }
 
     protected abstract boolean execute();
@@ -30,31 +23,6 @@ public abstract class WaitUntilAsserter {
     protected abstract String getTaskName();
 
     protected abstract String getFailureMessage();
-
-    public void performAssertion() throws InterruptedException {
-        accumulatedTime = 0;
-
-        log.debug("Initial Accumulated Time = {}",accumulatedTime);
-
-        boolean success = execute();
-
-        log.debug("Initial Assertion Result = {}",success);
-
-        while(!success && accumulatedTime < getMaxWaitTime()) {
-
-            accumulatedTime += sleep();
-            log.debug("Accumulated Time = {}",accumulatedTime);
-
-            log.debug("Retrying Assertion");
-            success = execute();
-
-            log.debug("Assertion Result = {}",success);
-        }
-
-        if(!success) {
-          throw new WaitUntilAssertionError(getTaskName()+" assertionFailed : "+getFailureMessage());
-        }
-    }
 
     public long getAccumulatedTime() {
         return accumulatedTime;
@@ -64,15 +32,43 @@ public abstract class WaitUntilAsserter {
         return maxWaitTime;
     }
 
+    public void setMaxWaitTime(long maxWaitTime) {
+        this.maxWaitTime = maxWaitTime;
+    }
+
+    public void performAssertion() throws InterruptedException {
+        accumulatedTime = 0;
+
+        LOG.debug("Initial Accumulated Time = {}",accumulatedTime);
+
+        boolean success = execute();
+
+        LOG.debug("Initial Assertion Result = {}",success);
+
+        while(!success && accumulatedTime < getMaxWaitTime()) {
+
+            accumulatedTime += sleep();
+            LOG.debug("Accumulated Time = {}",accumulatedTime);
+
+            LOG.debug("Retrying Assertion");
+            success = execute();
+
+            LOG.debug("Assertion Result = {}",success);
+        }
+
+        if(!success) {
+          throw new WaitUntilAssertionError(getTaskName()+" assertionFailed : "+getFailureMessage());
+        }
+    }
+
     private long sleep() throws InterruptedException {
+        final long sleepPeriod = 500;
+        final long sleepStart = System.currentTimeMillis();
 
-        long sleepStart = System.currentTimeMillis();
+        LOG.debug("Sleeping for = {}",sleepPeriod);
+        TimeUnit.MILLISECONDS.sleep(sleepPeriod);
 
-        log.debug("Sleeping for = {}",SLEEP);
-        TimeUnit.MILLISECONDS.sleep(SLEEP);
-
-        long sleepEnd = System.currentTimeMillis();
-
+        final long sleepEnd = System.currentTimeMillis();
         return sleepEnd - sleepStart;
     }
 }

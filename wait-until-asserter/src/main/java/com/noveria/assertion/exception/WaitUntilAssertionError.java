@@ -3,7 +3,7 @@ package com.noveria.assertion.exception;
 
 public class WaitUntilAssertionError extends RuntimeException {
 
-    public WaitUntilAssertionError(String message) {
+    public WaitUntilAssertionError(final String message) {
         super(message);
     }
 }

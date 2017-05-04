@@ -13,8 +13,8 @@ public class ProcessingTimeAssertTask extends WaitUntilAsserter {
     String failureMessage;
 
     public ProcessingTimeAssertTask(RestHelper restHelper, long assertionTimeOut) {
-        super(assertionTimeOut);
         this.restHelper = restHelper;
+        setMaxWaitTime(assertionTimeOut);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package com.noveria.assertion.asserter;
 
 import com.noveria.assertion.exception.WaitUntilAssertionError;
-import com.noveria.common.BaseUnitTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,13 +12,14 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 
-public class WaitUntilAsserterTest extends BaseUnitTest {
+public class WaitUntilAsserterTest {
 
     @Mock
     WaitUntilAsserter testee;
 
     @Before
     public void Setup() throws InterruptedException {
+        MockitoAnnotations.initMocks(this);
 
         when(testee.execute()).thenReturn(true);
         when(testee.getTaskName()).thenReturn("My Mock Task");
@@ -26,6 +27,32 @@ public class WaitUntilAsserterTest extends BaseUnitTest {
 
         doCallRealMethod().when(testee).performAssertion();
         doCallRealMethod().when(testee).getAccumulatedTime();
+    }
+
+    @Test
+    public void defaultMaxWaitTime_setAs_expected() {
+       TestWaitAsserter testWaitAsserter = new TestWaitAsserter();
+       assertEquals(5000,testWaitAsserter.getMaxWaitTime());
+    }
+
+    @Test
+    public void maxWaitTime_setAs_expected() {
+        TestWaitAsserter testWaitAsserter = new TestWaitAsserter();
+        testWaitAsserter.setMaxWaitTime(6000);
+
+        assertEquals(6000,testWaitAsserter.getMaxWaitTime());
+    }
+
+    @Test
+    public void failureMessage_setAs_expected() {
+        TestWaitAsserter testWaitAsserter = new TestWaitAsserter();
+        assertEquals("TestWaitAsserter Faillure Message",testWaitAsserter.getFailureMessage());
+    }
+
+    @Test
+    public void taskName_setAs_expected() {
+        TestWaitAsserter testWaitAsserter = new TestWaitAsserter();
+        assertEquals("TestWaitAsserter",testWaitAsserter.getTaskName());
     }
 
     @Test
@@ -39,7 +66,6 @@ public class WaitUntilAsserterTest extends BaseUnitTest {
     }
 
     @Test
-    //@Ignore
     public void performAssertion_passes_ifAssertTaskSuccessfulAfterTwoAttempts() throws InterruptedException {
         when(testee.execute()).thenReturn(false).thenReturn(true);
         when(testee.getMaxWaitTime()).thenReturn(500l);
