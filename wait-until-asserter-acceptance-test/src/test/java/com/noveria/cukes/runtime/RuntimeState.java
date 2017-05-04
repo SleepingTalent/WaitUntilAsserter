@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
-@Scope("cucumber-glue")
 public class RuntimeState {
 
     private WaitUntilAsserter waitUntilAsserter;
     private int processingTime;
+    private String host;
 
     public void setInitialState() {
         System.err.println("Setting an initial state");
@@ -37,5 +37,13 @@ public class RuntimeState {
 
     public int getProcessingTime() {
         return processingTime;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getHost() {
+        return host;
     }
 }

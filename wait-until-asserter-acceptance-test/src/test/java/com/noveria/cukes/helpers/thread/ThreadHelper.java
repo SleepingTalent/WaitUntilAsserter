@@ -4,7 +4,7 @@ import com.noveria.cukes.helpers.rest.RestHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component("threadHelper")
+@Component
 public class ThreadHelper {
 
     @Autowired

@@ -8,19 +8,30 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>wait-until-asserter-acceptance-test</artifactId>
-    <packaging>war</packaging>
 
     <name>wait-until-asserter-acceptance-test</name>
     <url>http://maven.apache.org</url>
 
     <properties>
-        <spring.version>4.1.5.RELEASE</spring.version>
+        <spring.boot.version>1.4.3.RELEASE</spring.boot.version>
         <slf4j.version>1.7.7</slf4j.version>
         <logback.version>1.0.1</logback.version>
-        <!--<acceptanceTest.runner>**/AcceptanceTest.java</acceptanceTest.runner>-->
         <cucumber.version>1.2.2</cucumber.version>
         <cucumber.report.name>WaitUntilAsserter</cucumber.report.name>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -33,24 +44,6 @@
             <groupId>com.noveria.assertion</groupId>
             <artifactId>wait-until-asserter</artifactId>
             <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>${logback.version}</version>
         </dependency>
 
         <dependency>
@@ -90,39 +83,35 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
+            <!-- Setup Spring Boot -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring.boot.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
+            <!-- Setup Spring MVC & REST, use Embedded Tomcat -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring.boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+            <version>${spring.boot.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jsp-2.1</artifactId>
-            <version>6.0.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring.boot.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -132,11 +121,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <!--<excludes>-->
-                        <!--<exclude>${acceptanceTest.runner}</exclude>-->
-                    <!--</excludes>-->
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -147,62 +131,10 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <configuration>
-                            <!--<includes>-->
-                                <!--<include>${acceptanceTest.runner}</include>-->
-                          <!--</includes>-->
-                        </configuration>
                         <id>acceptance-test</id>
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.2.2.v20140723</version>
-                <configuration>
-                    <war>${project.build.directory}/${build.finalName}</war>
-                    <webApp>
-                        <contextPath>/testing-service</contextPath>
-                    </webApp>
-                    <stopPort>4005</stopPort>
-                    <stopKey>STOP</stopKey>
-                    <stopWait>10</stopWait>
-                    <httpConnector>
-                        <port>4094</port>
-                        <idleTimeout>60000</idleTimeout>
-                    </httpConnector>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>ch.qos.logback</groupId>
-                        <artifactId>logback-classic</artifactId>
-                        <version>${logback.version}</version>
-                    </dependency>
-                </dependencies>
-             <executions>
-                  <execution>
-                        <id>start-jetty</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>deploy-war</goal>
-                        </goals>
-                      <configuration>
-                          <scanIntervalSeconds>0</scanIntervalSeconds>
-                          <daemon>true</daemon>
-                          <stopKey />
-                          <stopPort />
-                      </configuration>
-                    </execution>
-                    <execution>
-                        <id>stop-jetty</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -224,6 +156,18 @@
                             <cucumberOutput>${project.build.directory}/cucumber-report/result.json</cucumberOutput>
                             <parallelTesting>false</parallelTesting>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

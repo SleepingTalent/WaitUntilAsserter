@@ -1,6 +1,8 @@
 package com.noveria.cukes.helpers.rest;
 
+import com.noveria.cukes.runtime.RuntimeState;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -11,23 +13,30 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component("restHelper")
+@Component
 public class RestHelper {
 
-    public static final String BASE_URL = "http://localhost:4094/testing-service/processingTimeController/";
+    public static final String REST_URL = "/processingTimeController";
+
+    @Autowired
+    RuntimeState runtimeState;
+
+    private String getBaseUrl() {
+        return runtimeState.getHost()+REST_URL;
+    }
 
     public void setProcessingTime(int processingTime) {
-        String uri = BASE_URL+"/processTime/{time}";
+        String uri = getBaseUrl()+"/processTime/{time}";
         postTime(uri, processingTime);
     }
 
     public Boolean processingComplete() {
-        String uri = BASE_URL+"/processingComplete/";
+        String uri = getBaseUrl()+"/processingComplete/";
         return getBooleanResponse(uri);
     }
 
     public void setProcessingComplete(boolean complete) {
-        String uri = BASE_URL+"processingComplete/{value}";
+        String uri = getBaseUrl()+"/processingComplete/{value}";
         postComplete(uri, complete);
     }
 
