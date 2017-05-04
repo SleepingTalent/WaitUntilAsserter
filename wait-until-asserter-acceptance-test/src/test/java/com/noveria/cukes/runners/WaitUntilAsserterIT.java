@@ -6,9 +6,9 @@ import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(strict=false, format={"pretty","html:target/report/cucumber","json:target/report/cucumber/result.json"}, glue="com.noveria.cukes",
+@CucumberOptions(strict=false, format={"pretty","html:target/cucumber-report","json:target/cucumber-report/result.json"}, glue="com.noveria.cukes",
         features="classpath:features", tags={"~@wip"}, monochrome = true)
-public class AcceptanceTest {
+public class WaitUntilAsserterIT {
 
 
 }
