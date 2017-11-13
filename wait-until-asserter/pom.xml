@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.noveria.assertion</groupId>
         <artifactId>wait-until-asserter-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -19,7 +19,7 @@
         <mutation.tests>false</mutation.tests>
         <skip.pmd.checks>true</skip.pmd.checks>
 
-        <mutation.threshold>90</mutation.threshold>
+        <mutation.threshold>82</mutation.threshold>
 
         <slf4j.version>1.7.7</slf4j.version>
         <logback.version>1.1.7</logback.version>
@@ -88,88 +88,55 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <quiet>true</quiet>
+                    <nonavbar>true</nonavbar>
+                    <notree>true</notree>
+                    <nocomment>true</nocomment>
+                    <nohelp>true</nohelp>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>code-quality-checks</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-pmd-plugin</artifactId>
-                        <version>3.7</version>
-                        <configuration>
-                            <skip>${skip.pmd.checks}</skip>
-                            <failOnViolation>true</failOnViolation>
-                            <failurePriority>5</failurePriority>
-                            <verbose>true</verbose>
-                            <rulesets>
-                                <ruleset>/rulesets/java/braces.xml</ruleset>
-                                <ruleset>/rulesets/java/codesize.xml</ruleset>
-                                <ruleset>/rulesets/java/coupling.xml</ruleset>
-                                <ruleset>/rulesets/java/design.xml</ruleset>
-                                <ruleset>/rulesets/java/empty.xml</ruleset>
-                                <ruleset>/rulesets/java/imports.xml</ruleset>
-                                <ruleset>/rulesets/java/optimizations.xml</ruleset>
-                                <ruleset>/rulesets/java/strictexception.xml</ruleset>
-                                <ruleset>/rulesets/java/strings.xml</ruleset>
-                                <ruleset>/rulesets/java/typeresolution.xml</ruleset>
-                                <ruleset>/rulesets/java/unnecessary.xml</ruleset>
-                                <ruleset>/rulesets/java/unusedcode.xml</ruleset>
-                                <ruleset>/rulesets/java/basic.xml</ruleset>
-                                <ruleset>/rulesets/java/braces.xml</ruleset>
-                                <ruleset>/rulesets/java/naming.xml</ruleset>
-                            </rulesets>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>verify-pmd</id>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <reporting>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-pmd-plugin</artifactId>
-                        <version>3.7</version>
-                        <reportSets>
-                        <reportSet>
-                            <reports>
-                                <report>pmd</report>
-                                <report>cpd</report>
-                            </reports>
-                        </reportSet>
-                       </reportSets>
-                        <configuration>
-                            <rulesets>
-                                <ruleset>/rulesets/java/braces.xml</ruleset>
-                                <ruleset>/rulesets/java/codesize.xml</ruleset>
-                                <ruleset>/rulesets/java/coupling.xml</ruleset>
-                                <ruleset>/rulesets/java/design.xml</ruleset>
-                                <ruleset>/rulesets/java/empty.xml</ruleset>
-                                <ruleset>/rulesets/java/imports.xml</ruleset>
-                                <ruleset>/rulesets/java/optimizations.xml</ruleset>
-                                <ruleset>/rulesets/java/strictexception.xml</ruleset>
-                                <ruleset>/rulesets/java/strings.xml</ruleset>
-                                <ruleset>/rulesets/java/typeresolution.xml</ruleset>
-                                <ruleset>/rulesets/java/unnecessary.xml</ruleset>
-                                <ruleset>/rulesets/java/unusedcode.xml</ruleset>
-                                <ruleset>/rulesets/java/basic.xml</ruleset>
-                                <ruleset>/rulesets/java/braces.xml</ruleset>
-                                <ruleset>/rulesets/java/naming.xml</ruleset>
-                            </rulesets>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </reporting>
-        </profile>
-    </profiles>
 </project>
