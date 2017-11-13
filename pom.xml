@@ -9,7 +9,7 @@
 
     <groupId>com.noveria.assertion</groupId>
     <artifactId>wait-until-asserter-parent</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <modules>
         <module>wait-until-asserter</module>
         <module>wait-until-asserter-acceptance-test</module>
